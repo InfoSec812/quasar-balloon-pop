@@ -1,6 +1,9 @@
 # Quasar Balloon Pop
 
-> A [Quasar](http://quasar-framework.org/) app to play balloon pop
+## Tools Used
+* [Quasar](http://quasar-framework.org/)
+* [Vue.js](http://vuejs.org/)
+* [Vues](http://vuex.vuejs.org/)
 
 ## Build Setup
 
