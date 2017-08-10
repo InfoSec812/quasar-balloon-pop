@@ -36,6 +36,8 @@ const guid = () => {
 
 const store = new Vuex.Store({
   state: {
+    clientHeight: 0,
+    clientWidth: 0,
     popped: 0,
     missed: 0,
     pHeight: 0,
@@ -44,7 +46,7 @@ const store = new Vuex.Store({
     balloons: new FilterArray(),
     balloonSize: 70,
     newBalloonChance: 4,
-    adjustment: 6,
+    adjustment: 2,
     interval: 32 // Interval at which the balloon height is incremented by `adjustment`
   },
   mutations: {
@@ -52,8 +54,8 @@ const store = new Vuex.Store({
       state.balloons.push({
         color: colors[Math.floor(Math.random() * colors.length)],
         imgId: guid(),
-        xPos: Math.round(Math.random() * document.body.clientWidth),
-        yPos: document.body.clientHeight
+        xPos: Math.round(Math.random() * state.clientWidth),
+        yPos: state.clientHeight
       });
     },
     floatUp (state) {
@@ -63,12 +65,15 @@ const store = new Vuex.Store({
       const holder = state.balloons;
       state.balloons = holder.filter((b) => {
         const maxRise = (0 - (state.balloonSize * 2));
+        let retVal = true;
         if (b.yPos < maxRise) {
           state.missed++;
-          return false;
-        } else {
-          return true;
+          retVal = false;
         }
+        if (b.xPos > (state.clientWidth - state.balloonSize)) {
+          retVal = false;
+        }
+        return retVal;
       });
     },
     popBalloon (state, imgId) {
@@ -77,6 +82,10 @@ const store = new Vuex.Store({
       state.balloons = holder.filter((b) => {
         return b.imgId !== imgId;
       });
+    },
+    updateDocSize (state) {
+      state.clientHeight = document.body.clientHeight;
+      state.clientWidth = document.body.clientWidth;
     }
   },
   strict: true

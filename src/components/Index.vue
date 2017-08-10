@@ -8,6 +8,10 @@
     </div>
 
     <balloon v-for="b in balloons" :color="b.color" :xPos="b.xPos" :yPos="b.yPos" :imgId="b.imgId" :key="b.imgId"></balloon>
+    <div id="stats">
+      {{ clientWidth }}<br />
+      {{ clientHeight }}<br />
+    </div>
   </q-layout>
 </template>
 
@@ -34,6 +38,7 @@ export default {
       }
 
       this.$store.commit('floatUp');
+      this.$store.commit('updateDocSize');
     }, this.$store.state.interval);
   },
   computed: {
@@ -45,6 +50,12 @@ export default {
     },
     missedCount () {
       return this.$store.state.missed;
+    },
+    clientWidth () {
+      return this.$store.state.clientWidth;
+    },
+    clientHeight () {
+      return this.$store.state.clientHeight;
     }
   },
   beforeDestroy () {
@@ -52,6 +63,10 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus">
+#stats {
+  position: absolute;
+  bottom: 20px;
+  right: 50%;
+}
 </style>

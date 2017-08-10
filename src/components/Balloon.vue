@@ -502,11 +502,11 @@ export default {
   },
   computed: {
     cHeight () {
-      let size = this.$store.state.balloonSize;
       if (Platform.is.mobile) {
-        size = Math.floor(this.$store.state.balloonSize * 0.7);
+        const size = Math.floor(this.$store.state.balloonSize * 0.7);
+        return `${size}px`;
       }
-      return `${size}px`;
+      return `${this.$store.state.balloonSize}px`;
     },
     position () {
       return `top: ${this.yPos}px; left: ${this.xPos}px;`;
